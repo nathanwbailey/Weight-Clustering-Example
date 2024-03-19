@@ -84,7 +84,7 @@ final_model = tfmot.clustering.keras.strip_clustering(clustered_model)
 for layer in final_model.layers:
     for weight in layer.weights:
         if 'kernel:0' in weight.name:
-            print((f"Number of clusters in weight {layer.name}/{weight.name} is {len(np.unique(weight))}"))
+            print(f"Number of clusters in weight {layer.name}/{weight.name} is {len(np.unique(weight))}")
 
 keras.models.save_model(final_model, 'clustered_model.h5', include_optimizer=False)
 
