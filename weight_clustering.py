@@ -83,7 +83,6 @@ final_model = tfmot.clustering.keras.strip_clustering(clustered_model)
 
 for layer in final_model.layers:
     for weight in layer.weights:
-        print(weight.name)
         if 'kernel:0' in weight.name:
             print((f"Number of clusters in weight {layer.name}/{weight.name} is {len(np.unique(weight))}"))
 
@@ -91,7 +90,7 @@ keras.models.save_model(final_model, 'clustered_model.h5', include_optimizer=Fal
 
 final_model_tflite = tf.lite.TFLiteConverter.from_keras_model(final_model).convert()
 
-with open('clustered_model.tflite') as f:
+with open('clustered_model.tflite', 'wb') as f:
     f.write(final_model_tflite)
 
 print(f"Size of zipped baseline keras model: {get_compressed_model_size('baseline_model.h5', 'baseline_model_keras_zipped'):.2f}")
